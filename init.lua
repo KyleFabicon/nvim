@@ -125,7 +125,8 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 
 vim.keymap.set('n', '<S-h>', '<cmd>bprevious<cr>', { desc = 'Prev Buffer' })
 vim.keymap.set('n', '<S-l>', '<cmd>bnext<cr>', { desc = 'Next Buffer' })
-vim.keymap.set('n', '<C-s>', '<cmd>silent !w<cr>', { desc = 'Save File' })
+vim.keymap.set('n', '<C-s>', '<cmd>w!<cr>', { desc = 'Save File' })
+vim.keymap.set('n', '<leader>qq', '<cmd>qa!<cr>', { desc = 'Quit All' })
 
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
@@ -488,7 +489,18 @@ require('lazy').setup({
         -- tsserver = {},
         --
 
-        intelephense = {},
+        intelephense = {
+          filetypes = { 'php', 'blade' },
+          settings = {
+            intelephense = {
+              filetypes = { 'php', 'blade' },
+              files = {
+                associations = { '*.php', '*.blade.php' }, -- Associating .blade.php files as well
+                maxSize = 5000000,
+              },
+            },
+          },
+        },
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -560,7 +572,7 @@ require('lazy').setup({
       formatters_by_ft = {
         lua = { 'stylua' },
         blade = { 'blade-formatter', 'rustywind' },
-        php = { 'phpcsfixer' },
+        php = { 'php' },
         javascript = { 'prettierd' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
@@ -571,7 +583,7 @@ require('lazy').setup({
       },
 
       formatters = {
-        phpcsfixer = {
+        php = {
           command = 'php-cs-fixer',
           args = {
             'fix',
@@ -740,7 +752,7 @@ require('lazy').setup({
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     opts = {
-      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'php', 'php_only' },
+      ensure_installed = { 'bash', 'c', 'html', 'lua', 'markdown', 'vim', 'vimdoc', 'php', 'php_only', 'blade' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -803,7 +815,7 @@ require('lazy').setup({
       local lint = require 'lint'
       lint.linters_by_ft = {
         markdown = { 'markdownlint' },
-        php = { 'phpstan' },
+        -- php = { 'phpcs' },
       }
 
       -- To allow other plugins to add linters to require('lint').linters_by_ft,
