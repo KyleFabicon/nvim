@@ -82,6 +82,7 @@ vim.opt.scrolloff = 10
 
 vim.opt.termguicolors = true
 
+vim.opt.foldenable = false
 -- vim.opt.cmdheight = 0
 
 -- [[ Basic Keymaps ]]
@@ -558,15 +559,16 @@ require('lazy').setup({
   { -- Autoformat
     'stevearc/conform.nvim',
     opts = {
-      notify_on_error = false,
+      notify_on_error = true,
       format_on_save = function(bufnr)
         -- Disable "format_on_save lsp_fallback" for languages that don't
         -- have a well standardized coding style. You can add additional
         -- languages here or re-enable it for the disabled ones.
         local disable_filetypes = { c = true, cpp = true }
         return {
-          timeout_ms = 5000,
-          lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+          timeout_ms = 20000,
+          -- lsp_fallback = not disable_filetypes[vim.bo[bufnr].filetype],
+          lsp_fallback = true,
         }
       end,
       formatters_by_ft = {
@@ -934,6 +936,35 @@ require('lazy').setup({
       --   If not available, we use `mini` as the fallback
       'rcarriga/nvim-notify',
     },
+  },
+  {
+    'kristijanhusak/vim-dadbod-ui',
+    dependencies = {
+      {
+        'tpope/vim-dadbod',
+        lazy = true,
+        init = function()
+          -- Your DBUI configuration
+          vim.g.db_ui_use_nerd_fonts = 1
+        end,
+      },
+      { 'pbogut/vim-dadbod-ssh', lazy = true },
+      { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
+    },
+    cmd = {
+      'DBUI',
+      'DBUIToggle',
+      'DBUIAddConnection',
+      'DBUIFindBuffer',
+    },
+    init = function()
+      -- Your DBUI configuration
+      vim.g.db_ui_use_nerd_fonts = 1
+    end,
+  },
+  {
+    'mrvaita/sqlrun.nvim',
+    opts = {},
   },
 }, {})
 
