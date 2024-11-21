@@ -888,12 +888,6 @@ require('lazy').setup({
     },
   },
 
-  { -- Discord Rich Presence
-    'andweeb/presence.nvim',
-    event = 'VeryLazy',
-    opts = { neovim_image_text = 'Working :(', main_image = 'file' },
-  },
-
   { -- Bufferline
     'akinsho/bufferline.nvim',
     version = '*',
@@ -938,34 +932,6 @@ require('lazy').setup({
     },
   },
   {
-    'kristijanhusak/vim-dadbod-ui',
-    dependencies = {
-      {
-        'tpope/vim-dadbod',
-        lazy = true,
-        init = function()
-          -- Your DBUI configuration
-          vim.g.db_ui_use_nerd_fonts = 1
-        end,
-      },
-      { 'pbogut/vim-dadbod-ssh', lazy = true },
-      { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql' }, lazy = true },
-    },
-    cmd = {
-      'DBUI',
-      'DBUIToggle',
-      'DBUIAddConnection',
-      'DBUIFindBuffer',
-    },
-    init = function()
-      -- Your DBUI configuration
-      vim.g.db_ui_use_nerd_fonts = 1
-    end,
-  },
-  {
-    'mrvaita/sqlrun.nvim',
-    opts = {},
-  },
 }, {})
 
 -- `modeline` `:help modeline`
